@@ -5,22 +5,26 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    main: './src/index.js'
+    main: './src/scripts/index.js' // Путь должен вести к вашему главному JS-файлу
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
-    publicPath: '',
+    filename: 'bundle.js',
+    publicPath: '/', 
   },
   mode: 'development',
   devServer: {
-    static: path.resolve(__dirname, './dist'),
+    static: {
+      directory: path.resolve(__dirname, 'dist'), // Исправлено для webpack-dev-server v4+
+    },
     open: true,
     compress: true,
-    port: 8080
+    port: 8080,
+    hot: true // Добавили горячую перезагрузку
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: '/node_modules/'
@@ -28,10 +32,15 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource',
+        generator: {
+          filename: 'assets/[hash][ext][query]' // Упорядочиваем ассеты
+        }
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, {
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
             loader: 'css-loader',
             options: {
               importLoaders: 1
@@ -44,10 +53,11 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html', 
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
-
+    new MiniCssExtractPlugin({
+      filename: 'styles/[name].[contenthash].css' 
+    }),
   ]
-} 
+}
