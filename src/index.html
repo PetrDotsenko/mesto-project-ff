@@ -45,6 +45,8 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2025 Mesto Russia</p>
       </footer>
+
+      <!-- Попап редактирования профиля -->
       <div class="popup popup_type_edit">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
@@ -56,13 +58,21 @@
               class="popup__input popup__input_type_name"
               placeholder="Имя"
               required
+              minlength="2"
+              maxlength="40"
+              pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+              data-error-message="Имя должно быть от 2 до 40 символов и содержать только буквы, пробел или дефис"
             />
             <input
               type="text"
               name="description"
               class="popup__input popup__input_type_description"
-              placeholder="Занятие"
+              placeholder="О себе"
               required
+              minlength="2"
+              maxlength="200"
+              pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+              data-error-message="Описание должно быть от 2 до 200 символов и содержать только буквы, пробел или дефис"
             />
             <button type="submit" class="button popup__button">
               Сохранить
@@ -70,6 +80,8 @@
           </form>
         </div>
       </div>
+
+      <!-- Попап новой карточки -->
       <div class="popup popup_type_new-card">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
@@ -81,6 +93,10 @@
               class="popup__input popup__input_type_card-name"
               placeholder="Название"
               required
+              minlength="1"
+              maxlength="30"
+              pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+              data-error-message="Название должно содержать только буквы, пробел или дефис"
             />
             <input
               type="url"
@@ -95,6 +111,8 @@
           </form>
         </div>
       </div>
+
+      <!-- Попап просмотра изображения -->
       <div class="popup popup_type_image">
         <div class="popup__content popup__content_content_image">
           <button type="button" class="popup__close"></button>
@@ -103,7 +121,8 @@
         </div>
       </div>
     </div>
-    <!-- Попап «Обновить аватар» -->
+
+    <!-- Попап обновления аватара -->
     <div class="popup popup_type_avatar">
       <div class="popup__content">
         <button
